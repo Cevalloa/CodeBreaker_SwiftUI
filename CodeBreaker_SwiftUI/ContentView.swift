@@ -14,13 +14,27 @@ struct ContentView: View {
             pegs(color: [.red, .blue, .green, .red])
             pegs(color: [.red, .green, .green, .yellow])
         }.padding()
-            .foregroundStyle(.blue)
     }
     
     func pegs(color: Array<Color>) -> some View {
         HStack {
             ForEach(color.indices, id: \.self) { index in
                 Circle().foregroundStyle(color[index])
+            }
+            
+            HStack {
+                VStack {
+                    Circle().fill(Color.green)
+                    Circle().strokeBorder(
+                        Color.primary,
+                        lineWidth: 3)
+                    .aspectRatio(1, contentMode: .fit)
+                }
+                
+                VStack {
+                    Circle()
+                    Circle().opacity(0)
+                }
             }
         }
     }
