@@ -19,23 +19,11 @@ struct ContentView: View {
     func pegs(color: Array<Color>) -> some View {
         HStack {
             ForEach(color.indices, id: \.self) { index in
-                Circle().foregroundStyle(color[index])
-            }
-            
-            HStack {
-                VStack {
-                    Circle().fill(Color.green)
-                    Circle().strokeBorder(
-                        Color.primary,
-                        lineWidth: 3)
+                RoundedRectangle(cornerRadius: 10)
                     .aspectRatio(1, contentMode: .fit)
-                }
-                
-                VStack {
-                    Circle()
-                    Circle().opacity(0)
-                }
+                    .foregroundStyle(color[index])
             }
+            MatchMarkers()
         }
     }
 }
