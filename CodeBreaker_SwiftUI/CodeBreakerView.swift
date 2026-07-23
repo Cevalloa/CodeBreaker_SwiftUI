@@ -15,7 +15,11 @@ struct CodeBreakerView: View {
             view(for: game.masterCode)
             view(for: game.guess)
 //            pegs(color: [.red, .green, .green, .yellow])
-        }.padding()
+            ForEach(game.attempts.indices, id:\.self) { index in
+                view(for: game.attempts[index])
+            }
+        }
+        .padding()
     }
     
     func view(for code: Code) -> some View {
