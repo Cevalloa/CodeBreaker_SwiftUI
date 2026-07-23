@@ -12,18 +12,18 @@ struct CodeBreakerView: View {
     
     var body: some View {
         VStack {
-            pegs(color: [.red, .green, .green, .yellow])
-            pegs(color: [.red, .blue, .green, .red])
-            pegs(color: [.red, .green, .green, .yellow])
+            view(for: game.masterCode)
+            view(for: game.guess)
+//            pegs(color: [.red, .green, .green, .yellow])
         }.padding()
     }
     
-    func pegs(color: Array<Color>) -> some View {
+    func view(for code: Code) -> some View {
         HStack {
-            ForEach(color.indices, id: \.self) { index in
+            ForEach(code.pegs.indices, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 10)
                     .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(color[index])
+                    .foregroundStyle(code.pegs[index])
             }
             MatchMarkers(matches: [.exact, .inexact, .nomatch, .exact])
         }
