@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    let game: CodeBreaker = CodeBreaker()
+    @State var game: CodeBreaker = CodeBreaker()
     
     var body: some View {
         VStack {
@@ -23,7 +23,12 @@ struct CodeBreakerView: View {
             ForEach(code.pegs.indices, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 10)
                     .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(code.pegs[index])
+                    .foregroundStyle(code.pegs[index]).onTapGesture {
+                        
+                        if code.kind == .guess {
+                            game.changeGuessPeg(at: index)
+                        }
+                    }
             }
             MatchMarkers(matches: [.exact, .inexact, .nomatch, .exact])
         }
