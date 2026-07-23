@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CodeBreakerView: View {
+    let game: CodeBreaker = CodeBreaker()
+    
     var body: some View {
         VStack {
             pegs(color: [.red, .green, .green, .yellow])
@@ -29,5 +31,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    CodeBreakerView()
 }
