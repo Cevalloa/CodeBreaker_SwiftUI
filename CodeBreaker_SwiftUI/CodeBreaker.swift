@@ -44,4 +44,27 @@ struct Code {
         case attempt
         case unknown
     }
+    
+    func match(against otherCode: Code) -> [Match] {
+        var results: [Match] = Array(repeating: .nomatch, count: pegs.count)
+        var pegsToMatch = otherCode.pegs
+        for index in pegs.indices.reversed() {
+            if pegsToMatch.count > index,
+               pegsToMatch[index] == pegs[index] {
+                results[index] = .exact
+                pegsToMatch.remove(at: index)
+            }
+        }
+        
+        for index in pegs.indices {
+            if results[index] != .exact {
+                if let matchIndex = pegsToMatch.firstIndex(of: pegs[index]) {
+                    results[index] = .inexact
+                    pegsToMatch.remove(at: matchIndex)
+                }
+            }
+        }
+        
+        return results
+    }
 }
