@@ -12,7 +12,7 @@ struct CodeBreakerView: View {
         .brown, .yellow, .orange, .black,
     ])
     var selection: Int = 0
-    
+
     // MARK: - Body
 
     var body: some View {
@@ -61,18 +61,17 @@ struct CodeBreakerView: View {
                         }
                     }
             }
-            Rectangle().foregroundStyle(Color.clear).aspectRatio(
+            Color.clear.aspectRatio(
                 1,
                 contentMode: .fit
             )
             .overlay {
                 if let matches = code.matches {
                     MatchMarkers(matches: matches)
-                        .overlay {
-                            if code.kind == .guess {
-                                guessButton
-                            }
-                        }
+                } else {
+                    if code.kind == .guess {
+                        guessButton
+                    }
                 }
             }
         }
