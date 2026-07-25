@@ -53,13 +53,13 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
             }
         }
     }
+}
 
-    struct Selection {
-        static let border: CGFloat = 5
-        static let cornerRadius: CGFloat = 10
-        static let color: Color = Color.gray(0.85)
-        static let shape = RoundedRectangle(cornerRadius: cornerRadius)
-    }
+fileprivate struct Selection {
+    static let border: CGFloat = 5
+    static let cornerRadius: CGFloat = 10
+    static let color: Color = Color.gray(0.85)
+    static let shape = RoundedRectangle(cornerRadius: cornerRadius)
 }
 
 #Preview {
