@@ -57,23 +57,7 @@ struct CodeBreakerView: View {
 
     func view(for code: Code) -> some View {
         HStack {
-            ForEach(code.pegs.indices, id: \.self) { index in
-                PegView(peg: code.pegs[index])
-                    .padding(Selection.border)
-                    .background {
-                        
-                        if selection == index,
-                           code.kind == .guess {
-                            Selection.shape
-                                .foregroundStyle(Selection.color)
-                        }
-                    }
-                    .onTapGesture {
-                        if code.kind == .guess {
-                            selection = index
-                        }
-                    }
-            }
+            CodeView(code: code, selection: $selection)
             Color.clear.aspectRatio(
                 1,
                 contentMode: .fit
@@ -94,13 +78,6 @@ struct CodeBreakerView: View {
         static let minimumFontSize: CGFloat = 8
         static let maximumFontSize: CGFloat = 80
         static let scaleFactor: CGFloat = minimumFontSize / maximumFontSize
-    }
-    
-    struct Selection {
-        static let border: CGFloat = 5
-        static let cornerRadius: CGFloat = 10
-        static let color: Color = Color.gray(0.85)
-        static let shape = RoundedRectangle(cornerRadius: cornerRadius)
     }
 }
 
