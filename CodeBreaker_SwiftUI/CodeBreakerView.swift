@@ -58,13 +58,13 @@ struct CodeBreakerView: View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 PegView(peg: code.pegs[index])
-                    .padding(5)
+                    .padding(Selection.border)
                     .background {
                         
                         if selection == index,
                            code.kind == .guess {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(Color.gray)
+                            Selection.shape
+                                .foregroundStyle(Selection.color)
                         }
                     }
                     .onTapGesture {
@@ -87,6 +87,19 @@ struct CodeBreakerView: View {
                 }
             }
         }
+    }
+    
+    struct Selection {
+        static let border: CGFloat = 5
+        static let cornerRadius: CGFloat = 10
+        static let color: Color = Color.gray(0.85)
+        static let shape = RoundedRectangle(cornerRadius: cornerRadius)
+    }
+}
+
+extension Color {
+    static func gray(_ brightness: CGFloat) -> Color {
+        return Color(hue: 148/360, saturation: 0, brightness: brightness)
     }
 }
 
