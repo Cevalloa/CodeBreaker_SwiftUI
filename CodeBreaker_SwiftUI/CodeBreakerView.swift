@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    @State var game: CodeBreaker = CodeBreaker(pegChoices: [
+    
+    // MARK: - Data Owned by class
+
+    @State private var game: CodeBreaker = CodeBreaker(pegChoices: [
         .brown, .yellow, .orange, .black,
     ])
-    var selection: Int = 0
+    @State private var selection: Int = 0
 
     // MARK: - Body
 
@@ -55,9 +58,18 @@ struct CodeBreakerView: View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 PegView(peg: code.pegs[index])
+                    .padding(5)
+                    .background {
+                        
+                        if selection == index,
+                           code.kind == .guess {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(Color.gray)
+                        }
+                    }
                     .onTapGesture {
                         if code.kind == .guess {
-                            game.changeGuessPeg(at: index)
+                            selection = index
                         }
                     }
             }
