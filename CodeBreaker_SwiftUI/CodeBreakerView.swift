@@ -22,7 +22,10 @@ struct CodeBreakerView: View {
         VStack {
             view(for: game.masterCode)
             ScrollView {
-                view(for: game.guess)
+                
+                if !game.isOver {
+                    view(for: game.guess)
+                }
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                     view(for: game.attempts[index])
                 }
@@ -39,6 +42,7 @@ struct CodeBreakerView: View {
         Button("Guess") {
             withAnimation {
                 game.attemptGuess()
+                selection = 0
             }
         }
         .font(.system(size: GuessButton.maximumFontSize))
