@@ -50,8 +50,8 @@ struct CodeBreakerView: View {
                 game.attemptGuess()
             }
         }
-        .font(.system(size: 80))
-        .minimumScaleFactor(0.1)
+        .font(.system(size: GuessButton.maximumFontSize))
+        .minimumScaleFactor(GuessButton.scaleFactor)
     }
 
     func view(for code: Code) -> some View {
@@ -87,6 +87,12 @@ struct CodeBreakerView: View {
                 }
             }
         }
+    }
+    
+    struct GuessButton {
+        static let minimumFontSize: CGFloat = 8
+        static let maximumFontSize: CGFloat = 80
+        static let scaleFactor: CGFloat = minimumFontSize / maximumFontSize
     }
     
     struct Selection {
