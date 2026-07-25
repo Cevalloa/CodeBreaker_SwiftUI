@@ -11,19 +11,34 @@ struct CodeBreakerView: View {
     @State var game: CodeBreaker = CodeBreaker(pegChoices: [
         .brown, .yellow, .orange, .black,
     ])
+    var selection: Int = 0
+    
+    // MARK: - Body
 
     var body: some View {
         VStack {
             view(for: game.masterCode)
-            //            pegs(color: [.red, .green, .green, .yellow])
             ScrollView {
                 view(for: game.guess)
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                     view(for: game.attempts[index])
                 }
             }
+            pegChooser
         }
         .padding()
+    }
+
+    var pegChooser: some View {
+        HStack {
+            ForEach(game.pegChoices, id: \.self) { peg in
+                Button {
+                    game.setGuessPeg(peg, at: selection)
+                } label: {
+                    PegView(peg: peg)
+                }
+            }
+        }
     }
 
     var guessButton: some View {
@@ -41,7 +56,6 @@ struct CodeBreakerView: View {
             ForEach(code.pegs.indices, id: \.self) { index in
                 PegView(peg: code.pegs[index])
                     .onTapGesture {
-
                         if code.kind == .guess {
                             game.changeGuessPeg(at: index)
                         }

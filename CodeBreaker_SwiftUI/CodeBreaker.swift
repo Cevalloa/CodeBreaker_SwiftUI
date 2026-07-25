@@ -27,12 +27,18 @@ struct CodeBreaker {
         attempts.append(attempt)
         guess.reset()
     }
+    
+    mutating func setGuessPeg(_ peg: Peg, at index: Int) {
+        guard guess.pegs.indices.contains(index) else {
+            return
+        }
+
+        guess.pegs[index] = peg
+    }
 
     mutating func changeGuessPeg(at index: Int) {
         let existingPeg = guess.pegs[index]
-        if let indexOfExisitingPegInPegChoices = pegChoices.firstIndex(
-            of: existingPeg
-        ) {
+        if let indexOfExisitingPegInPegChoices = pegChoices.firstIndex(of: existingPeg) {
             let newPeg = pegChoices[
                 (indexOfExisitingPegInPegChoices + 1) % pegChoices.count
             ]
