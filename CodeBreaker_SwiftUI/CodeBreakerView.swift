@@ -37,6 +37,7 @@ struct CodeBreakerView: View {
             ForEach(game.pegChoices, id: \.self) { peg in
                 Button {
                     game.setGuessPeg(peg, at: selection)
+                    selection = (selection + 1) % game.masterCode.pegs.count
                 } label: {
                     PegView(peg: peg)
                 }
