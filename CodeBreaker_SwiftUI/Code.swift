@@ -26,6 +26,10 @@ struct Code {
             pegs[index] = pegChoices.randomElement() ?? Code.missingPeg
         }
     }
+    
+    mutating func reset() {
+        pegs = Array(repeating: Code.missingPeg, count: 4)
+    }
 
     var matches: [Match]? {
         switch kind {
