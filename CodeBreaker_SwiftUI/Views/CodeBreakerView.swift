@@ -81,18 +81,22 @@ struct CodeBreakerView: View {
 
     var guessButton: some View {
         Button("Guess") {
-            withAnimation(.guess) {
-                game.attemptGuess()
-                selection = 0
-                hideMostRecentMarkers = true
-            } completion: {
-                withAnimation(.guess) {
-                    hideMostRecentMarkers = false
-                }
-            }
+           guess()
         }
         .font(.system(size: GuessButton.maximumFontSize))
         .minimumScaleFactor(GuessButton.scaleFactor)
+    }
+    
+    func guess() {
+        withAnimation(.guess) {
+            game.attemptGuess()
+            selection = 0
+            hideMostRecentMarkers = true
+        } completion: {
+            withAnimation(.guess) {
+                hideMostRecentMarkers = false
+            }
+        }
     }
 
     struct GuessButton {
