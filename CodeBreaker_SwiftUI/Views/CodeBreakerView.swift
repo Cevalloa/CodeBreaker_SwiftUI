@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    
+
     // MARK: - Data Owned by class
 
     @State private var game: CodeBreaker = CodeBreaker(pegChoices: [
@@ -20,15 +20,26 @@ struct CodeBreakerView: View {
 
     var body: some View {
         VStack {
-            CodeView(code: game.masterCode, selection: $selection, ancillaryView: { EmptyView() })
+            CodeView(
+                code: game.masterCode
+            )
             ScrollView {
                 if !game.isOver {
-                    CodeView(code: game.guess, selection: $selection, ancillaryView: { guessButton })
+                    CodeView(
+                        code: game.guess,
+                        selection: $selection,
+                        ancillaryView: { guessButton }
+                    )
                 }
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
-                    CodeView(code: game.attempts[index], selection: $selection, ancillaryView:{
-                        MatchMarkers(matches: game.attempts[index].matches ?? [])
-                    })
+                    CodeView(
+                        code: game.attempts[index],
+                        ancillaryView: {
+                            MatchMarkers(
+                                matches: game.attempts[index].matches ?? []
+                            )
+                        }
+                    )
                 }
             }
             PegChooser(choices: game.pegChoices) { peg in
@@ -49,7 +60,7 @@ struct CodeBreakerView: View {
         .font(.system(size: GuessButton.maximumFontSize))
         .minimumScaleFactor(GuessButton.scaleFactor)
     }
-    
+
     struct GuessButton {
         static let minimumFontSize: CGFloat = 8
         static let maximumFontSize: CGFloat = 80
@@ -59,7 +70,7 @@ struct CodeBreakerView: View {
 
 extension Color {
     static func gray(_ brightness: CGFloat) -> Color {
-        return Color(hue: 148/360, saturation: 0, brightness: brightness)
+        return Color(hue: 148 / 360, saturation: 0, brightness: brightness)
     }
 }
 

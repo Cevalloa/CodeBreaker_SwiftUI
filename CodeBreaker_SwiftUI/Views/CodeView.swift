@@ -14,8 +14,18 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
 
     // MARK: - Data owned
     @Binding var selection: Int
-    
+
     @ViewBuilder let ancillaryView: () -> AncillaryView
+
+    init(
+        code: Code,
+        selection: Binding<Int> = Binding<Int>.constant(-1),
+    @ViewBuilder ancillaryView: @escaping () -> AncillaryView = {EmptyView()}
+    ) {
+        self.code = code
+        self._selection = selection
+        self.ancillaryView = ancillaryView
+    }
 
     // MARK: Body
 
@@ -55,7 +65,7 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
     }
 }
 
-fileprivate struct Selection {
+private struct Selection {
     static let border: CGFloat = 5
     static let cornerRadius: CGFloat = 10
     static let color: Color = Color.gray(0.85)
