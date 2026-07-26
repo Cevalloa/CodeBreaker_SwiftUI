@@ -15,6 +15,7 @@ struct CodeBreakerView: View {
         .brown, .yellow, .orange, .black,
     ])
     @State private var selection: Int = 0
+    @State private var restarting = false
 
     // MARK: - Body
 
@@ -22,8 +23,13 @@ struct CodeBreakerView: View {
         VStack {
             Button("Restart") {
                 withAnimation(.restart) {
-                    game.restart()
-                    selection = 0
+                    restarting = true
+                } completion: {
+                    withAnimation(.restart) {
+                        game.restart()
+                        selection = 0
+                        restarting = false
+                    }
                 }
             }
 
@@ -31,12 +37,12 @@ struct CodeBreakerView: View {
                 code: game.masterCode
             )
             ScrollView {
-                if !game.isOver {
+                if !game.isOver || restarting {
                     CodeView(
                         code: game.guess,
                         selection: $selection,
                         ancillaryView: { guessButton }
-                    )
+                    ).animation(nil, value: game.attempts.count)
                 }
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                     CodeView(
