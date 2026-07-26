@@ -81,10 +81,8 @@ struct CodeBreakerView: View {
 
     var guessButton: some View {
         Button("Guess") {
-           guess()
-        }
-        .font(.system(size: GuessButton.maximumFontSize))
-        .minimumScaleFactor(GuessButton.scaleFactor)
+            guess()
+        }.flexibleSystemFont()
     }
     
     func guess() {
@@ -110,6 +108,13 @@ extension Animation {
     static let codeBreaker = Animation.easeInOut(duration: 3)
     static let guess = codeBreaker
     static let restart = codeBreaker
+}
+
+extension View {
+    func flexibleSystemFont(minimum: CGFloat = 8, maximum: CGFloat = 80) -> some View {
+        self.font(.system(size: maximum))
+            .minimumScaleFactor(minimum/maximum)
+    }
 }
 
 extension Color {
