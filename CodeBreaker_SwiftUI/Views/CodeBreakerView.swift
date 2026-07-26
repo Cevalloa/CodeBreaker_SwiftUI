@@ -20,6 +20,13 @@ struct CodeBreakerView: View {
 
     var body: some View {
         VStack {
+            Button("Restart") {
+                withAnimation(.restart) {
+                    game.restart()
+                    selection = 0
+                }
+            }
+
             CodeView(
                 code: game.masterCode
             )
@@ -71,7 +78,9 @@ struct CodeBreakerView: View {
 }
 
 extension Animation {
-    static let guess = Animation.easeInOut(duration: 3)
+    static let codeBreaker = Animation.easeInOut(duration: 3)
+    static let guess = codeBreaker
+    static let restart = codeBreaker
 }
 
 extension Color {
