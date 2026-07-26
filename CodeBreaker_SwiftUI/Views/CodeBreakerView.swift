@@ -49,11 +49,17 @@ struct CodeBreakerView: View {
                     )
                 }
             }
-            PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
+
+            if !game.isOver {
+                PegChooser(
+                    choices: game.pegChoices,
+                    onChoose: changePegAtSelection
+                ).transition(.pegChooser)
+            }
         }
         .padding()
     }
-    
+
     func changePegAtSelection(to peg: Peg) {
         game.setGuessPeg(peg, at: selection)
         selection = (selection + 1) % game.masterCode.pegs.count
@@ -87,6 +93,10 @@ extension Color {
     static func gray(_ brightness: CGFloat) -> Color {
         return Color(hue: 148 / 360, saturation: 0, brightness: brightness)
     }
+}
+
+extension AnyTransition {
+    static let pegChooser = AnyTransition.offset(x: 0, y: 200)
 }
 
 #Preview {
