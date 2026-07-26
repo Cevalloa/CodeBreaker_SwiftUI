@@ -46,6 +46,12 @@ struct CodeBreakerView: View {
                                 matches: game.attempts[index].matches ?? []
                             )
                         }
+                    ).transition(
+                        AnyTransition.asymmetric(
+                            insertion: game.isOver ? .opacity : .move(edge: .top),
+                            removal: .move(edge: .trailing)
+                        )
+
                     )
                 }
             }
