@@ -15,7 +15,7 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
     // MARK: - Data owned
     @Binding var selection: Int
     
-    let ancillaryView: AncillaryView
+    @ViewBuilder let ancillaryView: () -> AncillaryView
 
     // MARK: Body
 
@@ -49,7 +49,7 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
                 contentMode: .fit
             )
             .overlay {
-                ancillaryView
+                ancillaryView()
             }
         }
     }
