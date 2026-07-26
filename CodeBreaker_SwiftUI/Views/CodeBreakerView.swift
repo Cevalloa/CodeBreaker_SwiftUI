@@ -34,9 +34,9 @@ struct CodeBreakerView: View {
                 }
             }
 
-            CodeView(
-                code: game.masterCode
-            )
+            CodeView(code: game.masterCode) {
+                ElapsedTime(startTime: game.startTime, endTime: game.endTime)
+            }
             ScrollView {
                 if !game.isOver || restarting {
                     CodeView(
