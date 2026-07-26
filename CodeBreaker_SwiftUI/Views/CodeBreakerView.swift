@@ -46,13 +46,7 @@ struct CodeBreakerView: View {
                                 matches: game.attempts[index].matches ?? []
                             )
                         }
-                    ).transition(
-                        AnyTransition.asymmetric(
-                            insertion: game.isOver ? .opacity : .move(edge: .top),
-                            removal: .move(edge: .trailing)
-                        )
-
-                    )
+                    ).transition(.attempt(game.isOver))
                 }
             }
 
@@ -103,6 +97,12 @@ extension Color {
 
 extension AnyTransition {
     static let pegChooser = AnyTransition.offset(x: 0, y: 200)
+    static func attempt(_ isOver: Bool) -> AnyTransition {
+        AnyTransition.asymmetric(
+            insertion: isOver ? .opacity : .move(edge: .top),
+            removal: .move(edge: .trailing)
+        )
+    }
 }
 
 #Preview {
