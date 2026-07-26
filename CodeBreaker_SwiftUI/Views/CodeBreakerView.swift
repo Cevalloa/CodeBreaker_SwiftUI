@@ -16,6 +16,7 @@ struct CodeBreakerView: View {
     ])
     @State private var selection: Int = 0
     @State private var restarting = false
+    @State private var hideMostRecentMarkers = false
 
     // MARK: - Body
 
@@ -42,15 +43,22 @@ struct CodeBreakerView: View {
                         code: game.guess,
                         selection: $selection,
                         ancillaryView: { guessButton }
-                    ).animation(nil, value: game.attempts.count)
+                    )
+                    .animation(nil, value: game.attempts.count)
+                    .opacity(restarting ? 0 : 1)
                 }
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                     CodeView(
                         code: game.attempts[index],
                         ancillaryView: {
-                            MatchMarkers(
-                                matches: game.attempts[index].matches ?? []
-                            )
+                            
+                            let showMarkers = !hideMostRecentMarkers || index != game.attempts.count - 1
+                            
+                            if showMarkers, let matches = game.attempts[index].matches {
+                                MatchMarkers(
+                                    matches: game.attempts[index].matches ?? []
+                                )
+                            }
                         }
                     ).transition(.attempt(game.isOver))
                 }
@@ -76,6 +84,11 @@ struct CodeBreakerView: View {
             withAnimation(.guess) {
                 game.attemptGuess()
                 selection = 0
+                hideMostRecentMarkers = true
+            } completion: {
+                withAnimation(.guess) {
+                    hideMostRecentMarkers = false
+                }
             }
         }
         .font(.system(size: GuessButton.maximumFontSize))
