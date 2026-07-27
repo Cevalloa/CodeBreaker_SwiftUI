@@ -8,18 +8,36 @@
 import SwiftUI
 
 struct GameChooser: View {
-    
+
     // MARK: Data Owned
     @State private var games: [CodeBreaker] = []
 
     var body: some View {
         List(games, id: \.pegChoices) { game in
-            PegChooser(choices: game.pegChoices, onChoose: nil)
+            VStack(alignment: .leading) {
+                Text(game.name)
+                PegChooser(choices: game.pegChoices, onChoose: nil)
+            }
         }
         .onAppear {
-            games.append(CodeBreaker(pegChoices: [.red, .blue, .green, .yellow]))
-            games.append(CodeBreaker(pegChoices: [.orange, .brown, .black, .yellow]))
-            games.append(CodeBreaker(pegChoices: [.blue, .indigo, .cyan]))
+            games.append(
+                CodeBreaker(
+                    name: "Mastermind",
+                    pegChoices: [.red, .blue, .green, .yellow]
+                )
+            )
+            games.append(
+                CodeBreaker(
+                    name: "Earth Tones",
+                    pegChoices: [.orange, .brown, .black, .yellow]
+                )
+            )
+            games.append(
+                CodeBreaker(
+                    name: "Undersea",
+                    pegChoices: [.blue, .indigo, .cyan]
+                )
+            )
         }
     }
 }
