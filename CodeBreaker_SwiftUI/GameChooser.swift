@@ -13,10 +13,15 @@ struct GameChooser: View {
     @State private var games: [CodeBreaker] = []
 
     var body: some View {
-        List(games, id: \.pegChoices) { game in
-
+        NavigationStack {
+            List(games, id: \.pegChoices) { game in
+                NavigationLink {
+                    Text(game.name)
+                } label: {
+                    GameSummary(game: game)
+                }
+            }.listStyle(.plain)
         }
-        .listStyle(.plain)
         .onAppear {
             games.append(
                 CodeBreaker(

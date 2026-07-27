@@ -21,5 +21,7 @@ struct GameSummary: View {
 }
 
 #Preview {
-    GameSummary(game: CodeBreaker(name: "Preview", pegChoices: [.red, .cyan, .yellow]))
+    List {
+        GameSummary(game: CodeBreaker(name: "Preview", pegChoices: [.red, .cyan, .yellow]))
+    }
 }
