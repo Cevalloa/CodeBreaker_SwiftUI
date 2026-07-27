@@ -14,13 +14,9 @@ struct GameChooser: View {
 
     var body: some View {
         List(games, id: \.pegChoices) { game in
-            VStack(alignment: .leading) {
-                Text(game.name).font(.title)
-                PegChooser(choices: game.pegChoices, onChoose: nil)
-                    .frame(maxHeight:50)
-                Text("^[\(game.attempts.count) attempt](inflect: true)")
-            }
+
         }
+        .listStyle(.plain)
         .onAppear {
             games.append(
                 CodeBreaker(
