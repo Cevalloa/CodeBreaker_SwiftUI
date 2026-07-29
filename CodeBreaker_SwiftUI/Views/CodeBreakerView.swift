@@ -9,11 +9,11 @@ import SwiftUI
 
 struct CodeBreakerView: View {
 
+
+    @Binding var game: CodeBreaker
+    
     // MARK: - Data Owned by class
 
-    @State private var game: CodeBreaker = CodeBreaker(pegChoices: [
-        .brown, .yellow, .orange, .black,
-    ])
     @State private var selection: Int = 0
     @State private var restarting = false
     @State private var hideMostRecentMarkers = false
@@ -136,5 +136,6 @@ extension AnyTransition {
 }
 
 #Preview {
-    CodeBreakerView()
+    @Previewable @State var game = CodeBreaker(name: "Preview", pegChoices: [.blue, .red, .orange])
+    CodeBreakerView(game: $game)
 }
