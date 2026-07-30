@@ -9,9 +9,8 @@ import SwiftUI
 
 struct CodeBreakerView: View {
 
-
     @Binding var game: CodeBreaker
-    
+
     // MARK: - Data Owned by class
 
     @State private var selection: Int = 0
@@ -22,23 +21,7 @@ struct CodeBreakerView: View {
 
     var body: some View {
         VStack {
-            Button("Restart", systemImage: "arrow.circlepath") {
-                withAnimation(.restart) {
-                    restarting = true
-                } completion: {
-                    withAnimation(.restart) {
-                        game.restart()
-                        selection = 0
-                        restarting = false
-                    }
-                }
-            }
-
-            CodeView(code: game.masterCode) {
-                ElapsedTime(startTime: game.startTime, endTime: game.endTime).flexibleSystemFont()
-                    .monospaced()
-                    .lineLimit(1)
-            }
+            CodeView(code: game.masterCode)
             ScrollView {
                 if !game.isOver || restarting {
                     CodeView(
@@ -53,10 +36,14 @@ struct CodeBreakerView: View {
                     CodeView(
                         code: game.attempts[index],
                         ancillaryView: {
-                            
-                            let showMarkers = !hideMostRecentMarkers || index != game.attempts.count - 1
-                            
-                            if showMarkers, let matches = game.attempts[index].matches {
+
+                            let showMarkers =
+                                !hideMostRecentMarkers
+                                || index != game.attempts.count - 1
+
+                            if showMarkers,
+                                let matches = game.attempts[index].matches
+                            {
                                 MatchMarkers(
                                     matches: game.attempts[index].matches ?? []
                                 )
@@ -74,6 +61,28 @@ struct CodeBreakerView: View {
             }
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Restart", systemImage: "arrow.circlepath") {
+                    withAnimation(.restart) {
+                        restarting = true
+                    } completion: {
+                        withAnimation(.restart) {
+                            game.restart()
+                            selection = 0
+                            restarting = false
+                        }
+                    }
+                }
+            }
+
+            ToolbarItem(placement: .topBarLeading) {
+                ElapsedTime(startTime: game.startTime, endTime: game.endTime)
+                    .flexibleSystemFont()
+                    .monospaced()
+                    .lineLimit(1)
+            }
+        }
     }
 
     func changePegAtSelection(to peg: Peg) {
@@ -86,7 +95,7 @@ struct CodeBreakerView: View {
             guess()
         }.flexibleSystemFont()
     }
-    
+
     func guess() {
         withAnimation(.guess) {
             game.attemptGuess()
@@ -113,9 +122,11 @@ extension Animation {
 }
 
 extension View {
-    func flexibleSystemFont(minimum: CGFloat = 8, maximum: CGFloat = 80) -> some View {
+    func flexibleSystemFont(minimum: CGFloat = 8, maximum: CGFloat = 80)
+        -> some View
+    {
         self.font(.system(size: maximum))
-            .minimumScaleFactor(minimum/maximum)
+            .minimumScaleFactor(minimum / maximum)
     }
 }
 
@@ -136,6 +147,11 @@ extension AnyTransition {
 }
 
 #Preview {
-    @Previewable @State var game = CodeBreaker(name: "Preview", pegChoices: [.blue, .red, .orange])
-    CodeBreakerView(game: $game)
+    @Previewable @State var game = CodeBreaker(
+        name: "Preview",
+        pegChoices: [.blue, .red, .orange]
+    )
+    NavigationStack {
+        CodeBreakerView(game: $game)
+    }
 }
