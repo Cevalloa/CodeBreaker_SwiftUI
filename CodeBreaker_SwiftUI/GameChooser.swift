@@ -20,6 +20,10 @@ struct GameChooser: View {
                     NavigationLink(value: game) {
                         GameSummary(game: game)
                     }
+                    
+                    NavigationLink(value: game.masterCode.pegs) {
+                        Text("Cheat")
+                    }
 //                    NavigationLink {
 //                        CodeBreakerView(game: game)
 //                    } label: {
@@ -35,6 +39,9 @@ struct GameChooser: View {
             }
             .navigationDestination(for: CodeBreaker.self, destination: { game in
                 CodeBreakerView(game: game)
+            })
+            .navigationDestination(for: [Peg].self, destination: { pegs in
+                PegChooser(choices:pegs, onChoose: nil)
             })
             .toolbar {
                 EditButton()
