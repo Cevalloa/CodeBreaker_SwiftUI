@@ -9,7 +9,8 @@ import SwiftUI
 
 typealias Peg = Color
 
-struct CodeBreaker {
+@Observable
+class CodeBreaker {
     var name: String
     var masterCode: Code = Code(kind: .master(isHidden: true))
     var guess: Code = Code(kind: .guess)
@@ -24,7 +25,7 @@ struct CodeBreaker {
         masterCode.randomize(from: pegChoices)
     }
     
-    mutating func restart() {
+    func restart() {
         masterCode.kind = .master(isHidden: true)
         masterCode.randomize(from: pegChoices)
         guess.reset()
@@ -37,7 +38,7 @@ struct CodeBreaker {
         attempts.last?.pegs == masterCode.pegs
     }
 
-    mutating func attemptGuess() {
+    func attemptGuess() {
         var attempt = guess
         attempt.kind = .attempt(guess.match(against: masterCode))
         attempts.append(attempt)
@@ -49,7 +50,7 @@ struct CodeBreaker {
         }
     }
     
-    mutating func setGuessPeg(_ peg: Peg, at index: Int) {
+    func setGuessPeg(_ peg: Peg, at index: Int) {
         guard guess.pegs.indices.contains(index) else {
             return
         }
@@ -57,7 +58,7 @@ struct CodeBreaker {
         guess.pegs[index] = peg
     }
 
-    mutating func changeGuessPeg(at index: Int) {
+    func changeGuessPeg(at index: Int) {
         let existingPeg = guess.pegs[index]
         if let indexOfExisitingPegInPegChoices = pegChoices.firstIndex(of: existingPeg) {
             let newPeg = pegChoices[

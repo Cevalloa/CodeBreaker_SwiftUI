@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CodeBreakerView: View {
 
-    @Binding var game: CodeBreaker
+    let game: CodeBreaker
 
     // MARK: - Data Owned by class
 
@@ -62,7 +62,7 @@ struct CodeBreakerView: View {
         }
         .padding()
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button("Restart", systemImage: "arrow.circlepath") {
                     withAnimation(.restart) {
                         restarting = true
@@ -76,7 +76,7 @@ struct CodeBreakerView: View {
                 }
             }
 
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .automatic) {
                 ElapsedTime(startTime: game.startTime, endTime: game.endTime)
                     .flexibleSystemFont()
                     .monospaced()
@@ -152,6 +152,6 @@ extension AnyTransition {
         pegChoices: [.blue, .red, .orange]
     )
     NavigationStack {
-        CodeBreakerView(game: $game)
+        CodeBreakerView(game: game)
     }
 }
