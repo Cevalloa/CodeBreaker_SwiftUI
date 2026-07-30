@@ -17,11 +17,14 @@ struct GameChooser: View {
             List{
                 ForEach(games) {
                     game in
-                    NavigationLink {
-                        CodeBreakerView(game: game)
-                    } label: {
+                    NavigationLink(value: game) {
                         GameSummary(game: game)
                     }
+//                    NavigationLink {
+//                        CodeBreakerView(game: game)
+//                    } label: {
+//                        GameSummary(game: game)
+//                    }
                 }
                 .onDelete { offsets in
                     games.remove(atOffsets: offsets)
@@ -30,6 +33,9 @@ struct GameChooser: View {
                     games.move(fromOffsets: offsets, toOffset: destination)
                 }
             }
+            .navigationDestination(for: CodeBreaker.self, destination: { game in
+                CodeBreakerView(game: game)
+            })
             .toolbar {
                 EditButton()
             }

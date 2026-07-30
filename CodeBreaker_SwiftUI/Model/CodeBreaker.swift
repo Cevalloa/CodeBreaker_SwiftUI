@@ -10,7 +10,8 @@ import SwiftUI
 typealias Peg = Color
 
 @Observable
-class CodeBreaker: Identifiable {
+class CodeBreaker {
+    
     var name: String
     var masterCode: Code = Code(kind: .master(isHidden: true))
     var guess: Code = Code(kind: .guess)
@@ -71,4 +72,13 @@ class CodeBreaker: Identifiable {
     }
 }
 
+extension CodeBreaker: Identifiable, Hashable, Equatable {
+    static func == (lhs: CodeBreaker, rhs: CodeBreaker) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
 
