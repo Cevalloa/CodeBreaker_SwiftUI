@@ -14,13 +14,19 @@ struct GameChooser: View {
 
     var body: some View {
         NavigationStack {
-            List($games, id: \.pegChoices) { $game in
+            List($games, id: \.pegChoices, editActions: [.delete, .move]) {
+                $game in
                 NavigationLink {
                     CodeBreakerView(game: $game)
                 } label: {
                     GameSummary(game: game)
                 }
-            }.listStyle(.plain)
+            }
+            .toolbar {
+                EditButton()
+            }
+            .listStyle(.plain)
+
         }
         .onAppear {
             games.append(
