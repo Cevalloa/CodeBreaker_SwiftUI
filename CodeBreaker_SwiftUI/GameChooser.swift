@@ -11,9 +11,10 @@ struct GameChooser: View {
 
     // MARK: Data Owned
     @State private var games: [CodeBreaker] = []
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     var body: some View {
-        NavigationStack {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List{
                 ForEach(games) {
                     game in
@@ -48,7 +49,10 @@ struct GameChooser: View {
             }
             .listStyle(.plain)
 
+        } detail: {
+            Text("Choose a game!")
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear {
             games.append(
                 CodeBreaker(
