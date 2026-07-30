@@ -10,7 +10,7 @@ import SwiftUI
 typealias Peg = Color
 
 @Observable
-class CodeBreaker {
+class CodeBreaker: Identifiable {
     var name: String
     var masterCode: Code = Code(kind: .master(isHidden: true))
     var guess: Code = Code(kind: .guess)

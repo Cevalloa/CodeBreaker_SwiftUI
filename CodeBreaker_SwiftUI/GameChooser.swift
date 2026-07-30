@@ -15,7 +15,7 @@ struct GameChooser: View {
     var body: some View {
         NavigationStack {
             List{
-                ForEach(games, id: \.pegChoices) {
+                ForEach(games) {
                     game in
                     NavigationLink {
                         CodeBreakerView(game: game)
