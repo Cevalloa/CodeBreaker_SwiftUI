@@ -11,19 +11,15 @@ struct GameChooser: View {
 
     // MARK: Data Owned
     @State private var games: [CodeBreaker] = []
-    @State private var columnVisibility: NavigationSplitViewVisibility = .all
-
+    @State private var selection: CodeBreaker? = nil
+    
     var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            List{
+        NavigationSplitView(columnVisibility: .constant(.all)) {
+            List(selection: $selection){
                 ForEach(games) {
                     game in
                     NavigationLink(value: game) {
                         GameSummary(game: game)
-                    }
-                    
-                    NavigationLink(value: game.masterCode.pegs) {
-                        Text("Cheat")
                     }
 //                    NavigationLink {
 //                        CodeBreakerView(game: game)
@@ -38,11 +34,11 @@ struct GameChooser: View {
                     games.move(fromOffsets: offsets, toOffset: destination)
                 }
             }
+            .navigationTitle("Code Breaker")
             .navigationDestination(for: CodeBreaker.self, destination: { game in
                 CodeBreakerView(game: game)
-            })
-            .navigationDestination(for: [Peg].self, destination: { pegs in
-                PegChooser(choices:pegs, onChoose: nil)
+                    .navigationTitle(game.name)
+                    .navigationBarTitleDisplayMode(.inline)
             })
             .toolbar {
                 EditButton()
@@ -50,7 +46,13 @@ struct GameChooser: View {
             .listStyle(.plain)
 
         } detail: {
-            Text("Choose a game!")
+            if let selection {
+                CodeBreakerView(game: selection)
+                    .navigationTitle(selection.name)
+                    .navigationBarTitleDisplayMode(.inline)
+            } else {
+                Text("Choose a game!")
+            }
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear {

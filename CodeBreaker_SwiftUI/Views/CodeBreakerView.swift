@@ -57,7 +57,7 @@ struct CodeBreakerView: View {
                 PegChooser(
                     choices: game.pegChoices,
                     onChoose: changePegAtSelection
-                ).transition(.pegChooser)
+                ).transition(.pegChooser).frame(maxHeight: 90)
             }
         }
         .padding()
