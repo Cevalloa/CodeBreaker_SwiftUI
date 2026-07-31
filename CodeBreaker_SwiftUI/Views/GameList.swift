@@ -40,6 +40,12 @@ struct GameList: View {
             }
         }
         .toolbar {
+            Button("Add Game", systemImage: "plus") {
+                withAnimation {
+                    let newGame = CodeBreaker(name: "Untitled", pegChoices: [.red, .blue])
+                    games.append(newGame)
+                }
+            }
             EditButton()
         }
         .listStyle(.plain)
@@ -61,25 +67,27 @@ struct GameList: View {
     }
 
     func addSampleGames() {
-        games.append(
-            CodeBreaker(
-                name: "Mastermind",
-                pegChoices: [.red, .blue, .green, .yellow]
+        if games.isEmpty {
+            games.append(
+                CodeBreaker(
+                    name: "Mastermind",
+                    pegChoices: [.red, .blue, .green, .yellow]
+                )
             )
-        )
-        games.append(
-            CodeBreaker(
-                name: "Earth Tones",
-                pegChoices: [.orange, .brown, .black, .yellow]
+            games.append(
+                CodeBreaker(
+                    name: "Earth Tones",
+                    pegChoices: [.orange, .brown, .black, .yellow]
+                )
             )
-        )
-        games.append(
-            CodeBreaker(
-                name: "Undersea",
-                pegChoices: [.blue, .indigo, .cyan]
+            games.append(
+                CodeBreaker(
+                    name: "Undersea",
+                    pegChoices: [.blue, .indigo, .cyan]
+                )
             )
-        )
-        selection = games.first
+            selection = games.first
+        }
     }
 }
 
