@@ -16,7 +16,7 @@ class CodeBreaker {
     var masterCode: Code = Code(kind: .master(isHidden: true))
     var guess: Code = Code(kind: .guess)
     var attempts: [Code] = []
-    let pegChoices: [Peg] //= [.red, .green, .blue, .yellow]
+    var pegChoices: [Peg] //= [.red, .green, .blue, .yellow]
     var startTime: Date = Date.now
     var endTime: Date?
     

@@ -9,16 +9,34 @@ import SwiftUI
 
 struct GameEditor: View {
     @Bindable var game: CodeBreaker
-    
+
     var body: some View {
         Form {
-            TextField("Name", text: $game.name)
+            Section("Name") {
+                TextField("Name", text: $game.name)
+            }
+
+            Section("Pegs") {
+                List {
+                    ForEach(game.pegChoices.indices, id: \.self) { index in
+                        ColorPicker(
+                            selection: $game.pegChoices[index],
+                            supportsOpacity: false
+                        ) {
+                            Text("Peg Choice \(index + 1)")
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
-    let game = CodeBreaker(name: "Preview", pegChoices: [.orange, .purple])
+    @Previewable let game = CodeBreaker(
+        name: "Preview",
+        pegChoices: [.orange, .purple]
+    )
     GameEditor(game: game)
         .onChange(of: game.name) {
             print("Game name changed to \(game.name)")
