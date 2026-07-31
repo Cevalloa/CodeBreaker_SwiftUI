@@ -21,6 +21,11 @@ struct GameChooser: View {
                     NavigationLink(value: game) {
                         GameSummary(game: game)
                     }
+                    .contextMenu {
+                        Button("Delete", systemImage: "minus.circle") {
+                            games.removeAll(where: { $0 == game })
+                        }
+                    }
 //                    NavigationLink {
 //                        CodeBreakerView(game: game)
 //                    } label: {
@@ -35,11 +40,6 @@ struct GameChooser: View {
                 }
             }
             .navigationTitle("Code Breaker")
-            .navigationDestination(for: CodeBreaker.self, destination: { game in
-                CodeBreakerView(game: game)
-                    .navigationTitle(game.name)
-                    .navigationBarTitleDisplayMode(.inline)
-            })
             .toolbar {
                 EditButton()
             }
@@ -74,6 +74,7 @@ struct GameChooser: View {
                     pegChoices: [.blue, .indigo, .cyan]
                 )
             )
+            selection = games.first
         }
     }
 }
