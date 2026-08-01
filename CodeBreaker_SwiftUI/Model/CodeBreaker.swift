@@ -79,13 +79,3 @@ class CodeBreaker {
         }
     }
 }
-
-extension CodeBreaker: Identifiable, Hashable, Equatable {
-    static func == (lhs: CodeBreaker, rhs: CodeBreaker) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
