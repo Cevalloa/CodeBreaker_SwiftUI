@@ -5,12 +5,13 @@
 //  Created by Alex Cevallos on 7/25/26.
 //
 
-
+import SwiftData
 import SwiftUI
 
-struct Code {
+@Model
+class Code {
     var kind: Kind
-    var pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)
+    var pegs: [Peg]
 
     static let missingPeg: Peg = .clear
 
@@ -21,7 +22,12 @@ struct Code {
         case unknown
     }
     
-    mutating func randomize(from pegChoices: [Peg]) {
+    init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
+        self.kind = kind
+        self.pegs = pegs
+    }
+    
+    func randomize(from pegChoices: [Peg]) {
         for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missingPeg
         }
@@ -36,7 +42,7 @@ struct Code {
         }
     }
     
-    mutating func reset() {
+    func reset() {
         pegs = Array(repeating: Code.missingPeg, count: 4)
     }
 

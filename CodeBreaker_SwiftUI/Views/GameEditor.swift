@@ -13,7 +13,9 @@ struct GameEditor: View {
     var body: some View {
         Form {
             Section("Name") {
-                TextField("Name", text: $game.name)
+                TextField("Name", text: $game.name).onSubmit {
+                    print("confirmed edit")
+                }
             }
 
             Section("Pegs") {
