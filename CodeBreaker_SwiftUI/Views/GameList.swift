@@ -49,9 +49,25 @@ struct GameList: View {
 //                }
                 showGameEditor = true
             }
-            .sheet(isPresented: $showGameEditor, content: {
+            .onChange(of: gameToEdit) {
+                showGameEditor = gameToEdit != nil
+            }
+            .sheet(isPresented: $showGameEditor, onDismiss: {
+                if let gameToEdit {
+                    games.insert(gameToEdit, at: 0)
+                }
+            }, content: {
                 if let gameToEdit {
                     GameEditor(game: gameToEdit)
+                        .toolbar {
+                            Button("Cancel") {
+                                self.gameToEdit = nil
+                            }
+                            Button("Done") {
+                                games.insert(gameToEdit, at: 0)
+                                self.gameToEdit = nil
+                            }
+                        }
                 }
             })
             EditButton()
