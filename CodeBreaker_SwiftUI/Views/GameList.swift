@@ -10,7 +10,7 @@ import SwiftUI
 struct GameList: View {
     // MARK: Data Owned
     @State private var games: [CodeBreaker] = []
-    
+
     // MARK: - Data shared
     @Binding var selection: CodeBreaker?
     @State private var showGameEditor = false
@@ -43,33 +43,40 @@ struct GameList: View {
         }
         .toolbar {
             Button("Add Game", systemImage: "plus") {
-//                withAnimation {
-                    gameToEdit = CodeBreaker(name: "Untitled", pegChoices: [.red, .blue])
-//                    games.append(newGame)
-//                }
+                gameToEdit = CodeBreaker(
+                    name: "Untitled",
+                    pegChoices: [.red, .blue]
+                )
                 showGameEditor = true
             }
             .onChange(of: gameToEdit) {
                 showGameEditor = gameToEdit != nil
             }
-            .sheet(isPresented: $showGameEditor, onDismiss: {
-                if let gameToEdit {
-                    games.insert(gameToEdit, at: 0)
-                }
-            }, content: {
-                if let gameToEdit {
-                    GameEditor(game: gameToEdit)
-                        .toolbar {
-                            Button("Cancel") {
-                                self.gameToEdit = nil
-                            }
-                            Button("Done") {
-                                games.insert(gameToEdit, at: 0)
-                                self.gameToEdit = nil
-                            }
+            .sheet(
+                isPresented: $showGameEditor,
+                onDismiss: {
+                    if let gameToEdit {
+                        games.insert(gameToEdit, at: 0)
+                    }
+                },
+                content: {
+                    if let gameToEdit {
+                        NavigationStack {
+                            GameEditor(game: gameToEdit)
+                                .toolbar {
+                                    Button("Cancel") {
+                                        self.gameToEdit = nil
+                                    }
+                                    Button("Done") {
+                                        games.insert(gameToEdit, at: 0)
+                                        self.gameToEdit = nil
+                                    }
+                                }
                         }
+                    }
+
                 }
-            })
+            )
             EditButton()
         }
         .listStyle(.plain)
