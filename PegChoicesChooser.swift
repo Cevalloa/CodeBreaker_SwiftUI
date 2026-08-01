@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PegChoicesChooser: View {
     @Binding var pegChoices: [Peg]
-    
+
     var body: some View {
         List {
             ForEach(pegChoices.indices, id: \.self) { index in
@@ -17,15 +17,37 @@ struct PegChoicesChooser: View {
                     selection: $pegChoices[index],
                     supportsOpacity: false
                 ) {
-                    Button("Peg Choice \(index + 1)", systemImage: "minus.circle") {
+                    button(
+                        "Peg Choice \(index + 1)",
+                        systemImage: "minus.circle", color: .red
+                    ) {
                         pegChoices.remove(at: index)
                     }
                 }
             }
-            
-            Button("Add Peg", systemImage: "plus.circle") {
+
+            button("Add Peg", systemImage: "plus.circle", color: .green) {
                 pegChoices.append(.green)
             }
+        }
+    }
+
+    func button(
+        _ title: String,
+        systemImage: String,
+        color: Color? = nil,
+        action: @escaping () -> Void
+    ) -> some View {
+
+        HStack {
+            Button {
+                withAnimation {
+                    action()
+                }
+            } label: {
+                Image(systemName: systemImage).tint(color)
+            }
+            Text(title)
         }
     }
 }
