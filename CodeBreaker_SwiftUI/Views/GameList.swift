@@ -13,6 +13,8 @@ struct GameList: View {
     
     // MARK: - Data shared
     @Binding var selection: CodeBreaker?
+    @State private var showGameEditor = false
+    @State private var gameToEdit: CodeBreaker?
 
     var body: some View {
         List(selection: $selection) {
@@ -41,11 +43,17 @@ struct GameList: View {
         }
         .toolbar {
             Button("Add Game", systemImage: "plus") {
-                withAnimation {
-                    let newGame = CodeBreaker(name: "Untitled", pegChoices: [.red, .blue])
-                    games.append(newGame)
-                }
+//                withAnimation {
+                    gameToEdit = CodeBreaker(name: "Untitled", pegChoices: [.red, .blue])
+//                    games.append(newGame)
+//                }
+                showGameEditor = true
             }
+            .sheet(isPresented: $showGameEditor, content: {
+                if let gameToEdit {
+                    GameEditor(game: gameToEdit)
+                }
+            })
             EditButton()
         }
         .listStyle(.plain)
