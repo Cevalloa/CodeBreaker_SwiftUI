@@ -17,16 +17,7 @@ struct GameEditor: View {
             }
 
             Section("Pegs") {
-                List {
-                    ForEach(game.pegChoices.indices, id: \.self) { index in
-                        ColorPicker(
-                            selection: $game.pegChoices[index],
-                            supportsOpacity: false
-                        ) {
-                            Text("Peg Choice \(index + 1)")
-                        }
-                    }
-                }
+                PegChoicesChooser(pegChoices: $game.pegChoices)
             }
         }
     }

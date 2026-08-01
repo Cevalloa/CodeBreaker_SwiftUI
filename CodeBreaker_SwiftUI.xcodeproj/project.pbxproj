@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7E65769A301D921F00730A07 /* PegChoicesChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E657699301D921F00730A07 /* PegChoicesChooser.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7E3F6B25300C69EA00373DCC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		7E3F6B17300C69E900373DCC /* CodeBreaker_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeBreaker_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E3F6B24300C69EA00373DCC /* CodeBreaker_SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeBreaker_SwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E3F6B2E300C69EA00373DCC /* CodeBreaker_SwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeBreaker_SwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E657699301D921F00730A07 /* PegChoicesChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegChoicesChooser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		7E3F6B0E300C69E800373DCC = {
 			isa = PBXGroup;
 			children = (
+				7E657699301D921F00730A07 /* PegChoicesChooser.swift */,
 				7E3F6B19300C69E900373DCC /* CodeBreaker_SwiftUI */,
 				7E3F6B27300C69EA00373DCC /* CodeBreaker_SwiftUITests */,
 				7E3F6B31300C69EA00373DCC /* CodeBreaker_SwiftUIUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E65769A301D921F00730A07 /* PegChoicesChooser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
