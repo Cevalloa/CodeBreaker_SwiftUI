@@ -42,46 +42,63 @@ struct GameList: View {
             }
         }
         .toolbar {
-            Button("Add Game", systemImage: "plus") {
-                gameToEdit = CodeBreaker(
-                    name: "Untitled",
-                    pegChoices: [.red, .blue]
-                )
-                showGameEditor = true
-            }
-            .onChange(of: gameToEdit) {
-                showGameEditor = gameToEdit != nil
-            }
-            .sheet(
-                isPresented: $showGameEditor,
-                onDismiss: {
-                    if let gameToEdit {
-                        games.insert(gameToEdit, at: 0)
-                    }
-                },
-                content: {
-                    if let gameToEdit {
-                        NavigationStack {
-                            GameEditor(game: gameToEdit)
-                                .toolbar {
-                                    Button("Cancel") {
-                                        self.gameToEdit = nil
-                                    }
-                                    Button("Done") {
-                                        games.insert(gameToEdit, at: 0)
-                                        self.gameToEdit = nil
-                                    }
-                                }
-                        }
-                    }
-
-                }
-            )
+            addButton
             EditButton()
         }
         .listStyle(.plain)
         .onAppear {
             addSampleGames()
+        }
+    }
+    
+    var addButton: some View {
+        Button("Add Game", systemImage: "plus") {
+            gameToEdit = CodeBreaker(
+                name: "Untitled",
+                pegChoices: [.red, .blue]
+            )
+            showGameEditor = true
+        }
+        .onChange(of: gameToEdit) {
+            showGameEditor = gameToEdit != nil
+        }
+        .sheet(
+            isPresented: $showGameEditor,
+            onDismiss: {
+                if let gameToEdit {
+                    games.insert(gameToEdit, at: 0)
+                }
+            },
+            content: {
+                gameEditor
+
+            }
+        )
+    }
+    
+    @ViewBuilder
+    var gameEditor: some View {
+        if let gameToEdit {
+            NavigationStack {
+                GameEditor(game: gameToEdit)
+                    .toolbar {
+
+                        ToolbarItem(placement: .cancellationAction)
+                        {
+                            Button("Cancel") {
+                                self.gameToEdit = nil
+                            }
+                        }
+
+                        ToolbarItem(placement: .confirmationAction)
+                        {
+                            Button("Done") {
+                                games.insert(gameToEdit, at: 0)
+                                self.gameToEdit = nil
+                            }
+                        }
+                    }
+            }
         }
     }
 
