@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-typealias Peg = Color
+typealias Peg = String
 
 @Model
 class CodeBreaker {
@@ -23,7 +23,7 @@ class CodeBreaker {
 
     init(
         name: String = "Code Breaker",
-        pegChoices: [Peg] = [.red, .green, .blue, .yellow]
+        pegChoices: [Peg]
     ) {
         self.name = name
         self.pegChoices = pegChoices

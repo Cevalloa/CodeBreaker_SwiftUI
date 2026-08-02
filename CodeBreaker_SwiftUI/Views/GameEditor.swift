@@ -19,7 +19,7 @@ struct GameEditor: View {
             }
 
             Section("Pegs") {
-                PegChoicesChooser(pegChoices: $game.pegChoices)
+                PegChoicesChooser(pegChoices: $game.pegColorChoices)
             }
         }
     }
@@ -28,8 +28,7 @@ struct GameEditor: View {
 #Preview {
     @Previewable let game = CodeBreaker(
         name: "Preview",
-        pegChoices: [.orange, .purple]
-    )
+        pegChoices: [Color.red, Color.green].map(\.hex))
     GameEditor(game: game)
         .onChange(of: game.name) {
             print("Game name changed to \(game.name)")

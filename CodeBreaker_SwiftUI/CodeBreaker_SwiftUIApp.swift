@@ -5,13 +5,14 @@
 //  Created by Alex Cevallos on 7/18/26.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
 struct CodeBreaker_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            GameChooser()
+            GameChooser().modelContainer(for: CodeBreaker.self)
         }
     }
 }

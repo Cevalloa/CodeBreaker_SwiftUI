@@ -10,7 +10,7 @@ import SwiftUI
 
 @Model
 class Code {
-    var _kind: String
+    var _kind: String = Kind.unknown.description
     var pegs: [Peg]
     
     var kind: Kind {
@@ -22,11 +22,11 @@ class Code {
         }
     }
 
-    static let missingPeg: Peg = .clear
+    static let missingPeg: Peg = ""
     
     init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
-        self.kind = kind
         self.pegs = pegs
+        self.kind = kind
     }
     
     func randomize(from pegChoices: [Peg]) {
