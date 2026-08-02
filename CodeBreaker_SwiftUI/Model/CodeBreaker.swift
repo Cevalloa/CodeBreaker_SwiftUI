@@ -14,11 +14,11 @@ typealias Peg = Color
 class CodeBreaker {
 
     var name: String
-    var masterCode: Code = Code(kind: .master(isHidden: true))
-    var guess: Code = Code(kind: .guess)
-    var attempts: [Code] = []
+    @Relationship(deleteRule: .cascade) var masterCode: Code = Code(kind: .master(isHidden: true))
+    @Relationship(deleteRule: .cascade) var guess: Code = Code(kind: .guess)
+    @Relationship(deleteRule: .cascade) var attempts: [Code] = []
     var pegChoices: [Peg]  //= [.red, .green, .blue, .yellow]
-    var startTime: Date = Date.now
+    @Transient var startTime: Date = Date.now
     var endTime: Date?
 
     init(

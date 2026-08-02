@@ -10,17 +10,19 @@ import SwiftUI
 
 @Model
 class Code {
-    var kind: Kind
+    var _kind: String
     var pegs: [Peg]
+    
+    var kind: Kind {
+        get {
+            return Kind(_kind)
+        }
+        set {
+            _kind = newValue.description
+        }
+    }
 
     static let missingPeg: Peg = .clear
-
-    enum Kind: Equatable {
-        case master(isHidden: Bool)
-        case guess
-        case attempt([Match])
-        case unknown
-    }
     
     init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
         self.kind = kind
@@ -80,4 +82,10 @@ class Code {
             return exactMatches[index]
         }
     }
+}
+
+enum Match: String {
+    case nomatch
+    case exact
+    case inexact
 }
